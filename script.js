@@ -12,10 +12,16 @@
 let secretNumber = Math.trunc(Math.random()*20)+1;
 let score =  20;
 let highScore = 0;
+var audio = new Audio('tada-fanfare-a-6313.mp3')
+var audioLose = new Audio('game-over-39-199830.mp3')
+
+const canvas = document.querySelector('#confetti')
+const jsConfetti = new JSConfetti();
+
 const displayMessage = function(message){
     document.querySelector('.message').textContent = message;
 }
-//document.querySelector('.number').textContent = secretNumber;
+// document.querySelector('.number').textContent = secretNumber;
 
 
 document.querySelector('.check').addEventListener('click', function(){
@@ -39,6 +45,8 @@ document.querySelector('.again').addEventListener('click',function(){
     }else if(guess === secretNumber){
         // document.querySelector('.message').textContent = '🎉 Correct Number';
         displayMessage('🎉 Correct Number')
+        jsConfetti.addConfetti()
+        audio.play();
         document.querySelector('.number').textContent = secretNumber;
         document.querySelector('body').style.backgroundColor = 'green'
         document.querySelector('.number').style.width = '30rem'
@@ -56,6 +64,10 @@ document.querySelector('.again').addEventListener('click',function(){
         }else{
             // document.querySelector('.message').textContent = '😫 You lost the game!'
             displayMessage('😫 You lost the game!')
+            jsConfetti.addConfetti({
+                emojis: ['🤬', '😪', '😯', '😥', '😒', '😫']
+            })
+            audioLose.play()
             document.querySelector('.score').textContent = 0;
             document.querySelector('body').style.backgroundColor = 'red'
             document.querySelector('.number').style.width = '30rem'
